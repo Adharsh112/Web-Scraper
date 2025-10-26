@@ -14,7 +14,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// if we put undrescore before dependency it means import this program even though i do not call it directly
+// if we put undrescore before dependency it means, import this program even though i do not call it directly
 type apiConfig struct {
 	DB *database.Queries
 }
@@ -53,10 +53,11 @@ func main() {
 	}))
 
 	v1Router := chi.NewRouter()
+	router.Mount("/v1", v1Router)
 	v1Router.Get("/healthz", handlerReadiness)
 	v1Router.Get("/err", handlerErr)
-	router.Mount("/v1", v1Router)
 	v1Router.Post("/users", apicfg.handlerCreateUser)
+	v1Router.Get("/users", apicfg.handlerGetUser)
 
 	fmt.Printf("Server starting on port: %v", portString)
 	srv := &http.Server{
