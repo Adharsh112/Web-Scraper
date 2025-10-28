@@ -56,11 +56,14 @@ func main() {
 	router.Mount("/v1", v1Router)
 	v1Router.Get("/healthz", handlerReadiness)
 	v1Router.Get("/err", handlerErr)
+
 	v1Router.Post("/users", apicfg.handlerCreateUser)
 	v1Router.Get("/users", apicfg.middlewareAuth(apicfg.handlerGetUser))
 
 	v1Router.Post("/feeds", apicfg.middlewareAuth(apicfg.handlerCreateFeed))
 	v1Router.Get("/feeds", apicfg.handlerGetFeeds)
+
+	v1Router.Post("/feed_follows", apicfg.middlewareAuth(apicfg.handlerCreateFeedFollow))
 
 	fmt.Printf("Server starting on port: %v", portString)
 	srv := &http.Server{
