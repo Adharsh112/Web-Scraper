@@ -71,6 +71,7 @@ func main() {
 	v1Router.Get("/feed_follows", apicfg.middlewareAuth(apicfg.handlerGetFeedFollows))
 	v1Router.Delete("/feed_follows/{feedFollowID}", apicfg.middlewareAuth(apicfg.handlerDeleteFeedFollow))
 
+	v1Router.Get("/posts", apicfg.middlewareAuth(apicfg.handlerGetPostsForUser))
 	fmt.Printf("Server starting on port: %v", portString)
 	srv := &http.Server{
 		Handler: router,
